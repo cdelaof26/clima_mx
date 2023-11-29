@@ -5,6 +5,8 @@ datos/*.ddc
 datos/Daily*
 datos/*.json
 datos/estados
+datos/fontawesome-free-5.15.4-web.zip
+datos/fontawesome-free-5.15.4-web
 
 # dependencies
 /node_modules

@@ -4,6 +4,17 @@ Aplicación del clima para México hecha con NextJS, React, TailwindCSS y DaisyU
 
 ## Historial de cambios
 
+#### v0.0.4
+- Mejora de la muestra de los datos del pronóstico
+- Descarga de FontAwesome de forma local, **requiere que wget y unzip estén instalados**
+- Los mensajes de ejecución de scripts en Python ahora son un poco más descriptivos
+- El fondo donde se muestran los datos del clima ahora es dinámico
+- Al seleccionar un estado, se cargan los municipios disponibles [WIP]
+
+#### v0.0.3
+- Se dividieron componentes
+- Carga y muestra mínima de datos: CDMX, Gustavo A. Madero
+
 #### v0.0.2
 - Se agregó una vista básica y selectores [WIP]
 

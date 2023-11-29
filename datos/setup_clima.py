@@ -112,14 +112,16 @@ if __name__ == "__main__":
     json_estados: Path = cwd.joinpath("estados.json")
 
     if not archivo_ddc.exists():
-        print("Descargando clima...")
+        print("Descargando clima...", end=" ")
         eliminar_carpeta(directorio_ddc)
         eliminar_ddc(cwd)
         descargar_y_desempaquetar_clima()
+        print("Hecho!")
     elif json_estados.exists():
         print("Ya ha sido descargado el clima, terminando...")
         exit(0)  # Si ya existen los json, el programa termina
 
+    print("Procesando datos...", end=" ")
     with open(json_daily, "r") as archivo:
         datos_json_str = archivo.read()
 
@@ -194,3 +196,5 @@ if __name__ == "__main__":
             guardar_json(municipio_json, str(datos).replace("'", '"'))
 
     guardar_json(json_estados, "[" + ", ".join(estados_json_str) + "]")
+
+    print("Hecho! ")
