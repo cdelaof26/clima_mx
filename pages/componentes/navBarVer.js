@@ -29,7 +29,7 @@ export default function NavBarVer(props) {
     const [municipios, setMunicipios] = useState(cargarMunicipiosDefecto());
 
     // estadoAsync es una cadena
-    const [estadoAsync, setEstado] = useState("");
+    const [estadoAsync, setEstado] = useState("Ciudad de México");
     let estado = "";
     let i = 0;
 
@@ -54,7 +54,7 @@ export default function NavBarVer(props) {
             })
 
             let datos = await response.json();
-
+            enviarDatosIndex(datos, (usarEstadoAsync ? estadoAsync : estado), municipio)
             console.log(datos);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
@@ -88,6 +88,12 @@ export default function NavBarVer(props) {
         // no se actualiza lo suficientemente rápido como para poder usarlo inmediatamente.
         cargarDatosDeMunicipio(props.datos[i].municipios[0], false);
     }
+    //funcion que envia datos al index
+    const enviarDatosIndex = (res, estado, municipio)=>{
+        props.obtenerDatos(res);
+        props.obtenerEstado(estado);
+        props.obtenerMunicipio(municipio);
+    }
 
     return (
         <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-xl" aria-label="Sidebar">
@@ -115,7 +121,7 @@ export default function NavBarVer(props) {
                         <span className="label-text">Selecciona un municipio</span>
                         <i className="fa fas fa-map-marker"></i>
                     </label>
-                    <select className="select select-bordered" onChange={(e) => cargarDatosDeMunicipio(e.target.value, true)}>
+                    <select className="select select-bordered" onChange={(e) => cargarDatosDeMunicipio(e.target.value, true)} defaultValue="Gustavo A. Madero">
                         {municipios.map((municipio) => (
                             <option key={municipio} value={municipio}>{municipio}</option>
                         ))}

@@ -4,6 +4,9 @@ Aplicación del clima para México hecha con NextJS, React, TailwindCSS y DaisyU
 
 ## Historial de cambios
 
+#### v0.0.6
+- Carga y muestra datos de un municipio segun su estado
+
 #### v0.0.5
 - Se agregó API pública para obtener los datos de los JSON generados
 - Se documento un poco el código
