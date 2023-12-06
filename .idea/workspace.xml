@@ -5,22 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78b37dbc-275a-4de3-af23-ef29eefa4b95" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/componentesEstado/Pronostico.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datos/setup_clima.py" beforeDir="false" afterPath="$PROJECT_DIR$/datos/setup_clima.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datos/setup_data.sh" beforeDir="false" afterPath="$PROJECT_DIR$/datos/setup_data.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/componentes/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/componentes/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/hello.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/componentes/navBarVer.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/componentes/navBarVer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/componentesEstado/climaEstado.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/componentesEstado/Pronostico.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/componentesEstado/Pronostico.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -76,6 +78,7 @@
       <window_info anchor="bottom" id="Problems View" order="1" weight="0.33010203" />
       <window_info anchor="bottom" id="Terminal" order="2" />
       <window_info anchor="bottom" id="Services" order="3" />
+      <window_info anchor="right" id="documentation.v2" side_tool="true" />
       <window_info anchor="right" id="Endpoints" />
       <window_info anchor="right" id="Meet New UI" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
@@ -97,7 +100,9 @@
       <workItem from="1701146714892" duration="2630000" />
       <workItem from="1701149688443" duration="7518000" />
       <workItem from="1701193781593" duration="6501000" />
-      <workItem from="1701210110461" duration="10907000" />
+      <workItem from="1701210110461" duration="11424000" />
+      <workItem from="1701804824902" duration="6366000" />
+      <workItem from="1701816809655" duration="6923000" />
     </task>
     <servers />
   </component>

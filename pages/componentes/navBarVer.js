@@ -1,19 +1,92 @@
 import { useState } from "react";
 
+/**
+ * Componente NavBar
+ *
+ * props es un arreglo de objetos, donde cada objeto es:
+ *  {
+ *      nombre: "nombreDelEstado",
+ *      municipios: [
+ *          "municipio1", "municipio2", ..., "municipioN"
+ *      ]
+ *  }
+ *
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function NavBarVer(props) {
-    const [municipios, setMunicipios] = useState([]);
+    let cargarMunicipiosDefecto = () =>{
+        let ciudad = "Ciudad de México";
+        for (let i = 0; i < props.datos.length; i++)
+            if (props.datos[i].nombre === ciudad)
+                return props.datos[i].municipios;
 
-    let cargarMunicipiosDeEstado = (event) => {
-        let estado = event.target.value;
+        return [];
+    }
+
+    // municipios es un arreglo de cadenas
+    const [municipios, setMunicipios] = useState(cargarMunicipiosDefecto());
+
+    // estadoAsync es una cadena
+    const [estadoAsync, setEstado] = useState("");
+    let estado = "";
+    let i = 0;
+
+    async function cargarDatosDeMunicipio(municipio, usarEstadoAsync) {
+        if (municipio === '')
+            return
+
+        console.log("Build with: " + (usarEstadoAsync ? estadoAsync : estado) + " and " + municipio)
+
+        try {
+            const response = await fetch('/api/climaMunicipio', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        "estado": usarEstadoAsync ? estadoAsync : estado,
+                        "municipio": municipio
+                    }
+                ),
+            })
+
+            let datos = await response.json();
+
+            console.log(datos);
+        } catch (error) {
+            console.error('Error al obtener los datos:', error);
+        }
+    }
+
+    function cargarMunicipiosDeEstado(event) {
+        estado = event.target.value;
         if (estado === '')
             estado = "Ciudad de México";
 
-        for (let i = 0; i < props.datos.length; i++) {
+        for (i = 0; i < props.datos.length; i++) {
             if (props.datos[i].nombre === estado) {
                 setMunicipios(props.datos[i].municipios);
                 break;
             }
         }
+
+        // Básicamente por la naturaleza asincrona de useState, estadoAsync no se actualiza de forma inmediata,
+        // pero es necesario que sea inmediatamente para cargar los municipios.
+        //
+        // Si se declara estado como una variable con let, la variable queda fuera del alcance de cargarDatosDeMunicipio
+        // si se llama de forma externa (en el onChange), por lo que se requiere que la variable sea un atributo
+        // (que es básicamente usar useState).
+        //
+        // Por esa razón existe estado y estadoAsync
+        //
+        setEstado(estado);
+
+        // Se usa props.datos[i].municipios[0] en lugar de municipios[0] por lo mismo de la asincronicidad, municipios
+        // no se actualiza lo suficientemente rápido como para poder usarlo inmediatamente.
+        cargarDatosDeMunicipio(props.datos[i].municipios[0], false);
     }
 
     return (
@@ -42,7 +115,7 @@ export default function NavBarVer(props) {
                         <span className="label-text">Selecciona un municipio</span>
                         <i className="fa fas fa-map-marker"></i>
                     </label>
-                    <select className="select select-bordered">
+                    <select className="select select-bordered" onChange={(e) => cargarDatosDeMunicipio(e.target.value, true)}>
                         {municipios.map((municipio) => (
                             <option key={municipio} value={municipio}>{municipio}</option>
                         ))}

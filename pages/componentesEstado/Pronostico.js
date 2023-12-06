@@ -1,11 +1,23 @@
 import { useEffect, useState } from 'react';
 
-
+/**
+ * Recorta el decimal de una cadena
+ *
+ * @param valor
+ * @param terminacion es una cadena que se agrega al final, pensado para poner 'º' o '%'
+ * @returns {string}
+ */
 function formatearDecimal(valor, terminacion) {
     valor = valor.toString();
     return valor.substring(0, valor.indexOf(".")) + terminacion;
 }
 
+/**
+ * Transforma la fecha sin formato a una cadena de la forma YYYY-MM-DD
+ *
+ * @param fechaSinFormato
+ * @returns {string}
+ */
 function transformarFecha(fechaSinFormato){
     const anio = fechaSinFormato.slice(0, 4);
     const mes = fechaSinFormato.slice(4, 6);
@@ -14,6 +26,13 @@ function transformarFecha(fechaSinFormato){
     return (`${anio}-${mes}-${dia}`)
 }
 
+/**
+ * Obtiene un icono de FontAwesome dependiendo de la cobertura de nubes y la probabilidad de la lluvia
+ *
+ * @param coberturaDeNubes
+ * @param probabilidadDeLluvia
+ * @returns {string}
+ */
 function obtenerIconoDeClima(coberturaDeNubes, probabilidadDeLluvia) {
     let fCoberturaDeNubes = parseFloat(coberturaDeNubes);
     let fProbabilidadDeLluvia = parseFloat(probabilidadDeLluvia);
@@ -37,6 +56,13 @@ function obtenerIconoDeClima(coberturaDeNubes, probabilidadDeLluvia) {
     return "fa fa-moon";
 }
 
+/**
+ * Componente Tarjeta
+ *
+ * @param props objeto de datos: cc, probprec, dloc, tmax, tmin
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function TarjetaPronostico(props) {
     return (
         <div className="w-max h-92 mt-4 mb-4 bg-base-100 shadow-xl rounded-3xl">
@@ -70,6 +96,13 @@ function TarjetaPronostico(props) {
     );
 }
 
+/**
+ * Componente Pronostico, este componente contiene 4 componentes TarjetaPronostico
+ *
+ * @param props objeto de datos: estado, municipio, fecha, arregloDeDatos: [cc, probprec, dloc, tmax, tmin]
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function Pronostico(props) {
     const [bg1, setBG1] = useState("from-black");
     const [bg2, setBG2] = useState("to-black");
@@ -138,7 +171,7 @@ export default function Pronostico(props) {
     useEffect(()=>{
         setInterval(() => {
             cambiarBG();
-        }, 15000);
+        }, 1500);
     },[])
 
     return (

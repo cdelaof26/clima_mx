@@ -1,9 +1,9 @@
-import { promises as fs } from "fs";
+import { promises as fs } from 'fs';
 import NavBarVer from './componentes/navBarVer';
 import Pronostico from './componentesEstado/Pronostico';
 
 
-export default function Home({ fechaDeRecopilacion: fechaDeRecopilacion, estados: datos, climaEscuela: dias}) {
+export default function Home({ fechaDeRecopilacion: fechaDeRecopilacion, estados: datos, climaEscuela: dias }) {
     // console.log(datos)
     // console.log(dias);
     return (
@@ -21,6 +21,8 @@ export default function Home({ fechaDeRecopilacion: fechaDeRecopilacion, estados
 }
 
 export async function getStaticProps() {
+    // Este for busca por el archivo .ddc en la ruta /cwd()/datos/ que es creado por Python al momento de la ejecución
+    // esto para obtener la fecha de creación de los datos
     const datosDir = await fs.readdir(process.cwd() + '/datos/')
     let fechaDeRecopilacion;
     for (const filename of datosDir)

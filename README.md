@@ -4,6 +4,10 @@ Aplicación del clima para México hecha con NextJS, React, TailwindCSS y DaisyU
 
 ## Historial de cambios
 
+#### v0.0.5
+- Se agregó API pública para obtener los datos de los JSON generados
+- Se documento un poco el código
+
 #### v0.0.4
 - Mejora de la muestra de los datos del pronóstico
 - Descarga de FontAwesome de forma local, **requiere que wget y unzip estén instalados**
