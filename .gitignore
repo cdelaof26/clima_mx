@@ -8,6 +8,8 @@ datos/estados
 datos/fontawesome-free-5.15.4-web.zip
 datos/fontawesome-free-5.15.4-web
 
+.idea
+
 # dependencies
 /node_modules
 /.pnp

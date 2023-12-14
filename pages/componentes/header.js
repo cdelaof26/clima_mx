@@ -1,11 +1,9 @@
 import Head from "next/head";
 
-const Header = () => {
-    return (
+export default function Header() {
+    return <Head>
         <title>
             {"Clima MX"}
         </title>
-    );
+    </Head>
 }
-
-export default Header;

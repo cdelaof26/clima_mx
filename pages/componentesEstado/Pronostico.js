@@ -68,7 +68,7 @@ function TarjetaPronostico(props) {
         <div className="w-max h-92 mt-4 mb-4 bg-base-100 shadow-xl rounded-3xl">
             <div className="rounded-lg p-6" id="stats" role="tabpanel" aria-labelledby="stats-tab">
                 <h5 className="mb-2 text-2xl font-semibold tracking-tight dark:text-white">Pronóstico para el día {props.datos.ndia}</h5>
-                <dl className="grid 2xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 gap-6 2xl:p-12 lg:p-8 md:p-2 mx-auto text-gray-900 dark:text-white">
+                <dl className="grid gap-6 xl:grid-cols-3 md:grid-cols-2 xl:p-12 lg:p-9 md:p-6 mx-auto text-gray-900 dark:text-white">
                     <div className="flex flex-col items-center justify-center">
                         <i className={obtenerIconoDeClima(props.datos.cc, props.datos.probprec) + " dark:fa-inverse fa-3x" + " fa-2x"}></i>
                         <dd className="text-gray-500 dark:text-gray-400">{transformarFecha(props.datos.dloc)}</dd>
@@ -175,7 +175,7 @@ export default function Pronostico(props) {
     },[])
 
     return (
-        <div className={`p-4 2xl:h-screen h-max sm:ml-64 bg-gradient-to-t ${bg1} ${bg3} ${bg2}`}>
+        <div className={`p-4 min-h-screen h-max w-full bg-gradient-to-t ${bg1} ${bg3} ${bg2}`}>
             <h1 className="mb-2 text-4xl font-semibold text-white">Pronóstico del clima en {props.municipio}, {props.estado}</h1>
             <h4 className="mb-2 font-semibold text-white">Datos recopilados el día {props.fecha}</h4>
             <div className="grid gap-2 justify-items-center lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
@@ -183,6 +183,7 @@ export default function Pronostico(props) {
                     <TarjetaPronostico key={pronostico.ndia} datos={pronostico}/>
                 ))}
             </div>
+            <div></div>
         </div>
     );
 }

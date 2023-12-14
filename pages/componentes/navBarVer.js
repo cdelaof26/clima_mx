@@ -88,6 +88,7 @@ export default function NavBarVer(props) {
         // no se actualiza lo suficientemente rápido como para poder usarlo inmediatamente.
         cargarDatosDeMunicipio(props.datos[i].municipios[0], false);
     }
+
     //funcion que envia datos al index
     const enviarDatosIndex = (res, estado, municipio)=>{
         props.obtenerDatos(res);
@@ -95,13 +96,29 @@ export default function NavBarVer(props) {
         props.obtenerMunicipio(municipio);
     }
 
-    return (
-        <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-base-100 shadow-xl" aria-label="Sidebar">
+    const [estadoDeApertura, setEstadoDeApertura] = useState("transition-transform -translate-x-full sm:translate-x-0")
+
+    function toggleMenu(event) {
+        if (estadoDeApertura === "transition-transform -translate-x-full sm:translate-x-0") // Esta oculto y se muestra
+            setEstadoDeApertura("transition-transform")
+        else // Es visible y se oculta
+            setEstadoDeApertura("transition-transform -translate-x-full sm:translate-x-0")
+    }
+
+    return <>
+        <button onClick={toggleMenu} data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" className="inline-flex items-center p-2 m-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+            <span className="sr-only">Abrir menu</span>
+            <i className="fa fa-align-justify fa-2x"></i>
+        </button>
+        <div className={`fixed md:relative top-0 left-0 z-40 w-full md:w-72 bg-base-100 shadow-xl ${estadoDeApertura}`}>
             <div className="h-full px-3 py-4 overflow-y-auto bg-base-100">
                 <div className="flex justify-evenly ps-2.5 mb-5">
                     <i className="fa fa-cloud fa-2x"></i>
                     <span className="self-center text-xl font-semibold whitespace-nowrap">Clima MX</span>
-                    <p></p>
+                    <button className="md:hidden" onClick={toggleMenu}>
+                        <span className="sr-only">Cerrar menu</span>
+                        <i className="fa fa-caret-left fa-2x"></i>
+                    </button>
                 </div>
 
                 <div className="form-control w-full max-w-xs">
@@ -128,6 +145,6 @@ export default function NavBarVer(props) {
                     </select>
                 </div>
             </div>
-        </aside>
-    );
+        </div>
+    </>
 }
