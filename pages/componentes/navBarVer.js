@@ -16,7 +16,10 @@ import { useState } from "react";
  * @constructor
  */
 export default function NavBarVer(props) {
-    let cargarMunicipiosDefecto = () =>{
+    if (props.datos === undefined)
+        return <></>;
+
+    let cargarMunicipiosDefecto = () => {
         let ciudad = "Ciudad de México";
         for (let i = 0; i < props.datos.length; i++)
             if (props.datos[i].nombre === ciudad)
@@ -37,8 +40,6 @@ export default function NavBarVer(props) {
         if (municipio === '')
             return
 
-        console.log("Build with: " + (usarEstadoAsync ? estadoAsync : estado) + " and " + municipio)
-
         try {
             const response = await fetch('/api/climaMunicipio', {
                 method: 'POST',
@@ -55,9 +56,9 @@ export default function NavBarVer(props) {
 
             let datos = await response.json();
             enviarDatosIndex(datos, (usarEstadoAsync ? estadoAsync : estado), municipio)
-            console.log(datos);
         } catch (error) {
             console.error('Error al obtener los datos:', error);
+            props.mostrarEtiquetaDeError();
         }
     }
 
@@ -86,10 +87,10 @@ export default function NavBarVer(props) {
 
         // Se usa props.datos[i].municipios[0] en lugar de municipios[0] por lo mismo de la asincronicidad, municipios
         // no se actualiza lo suficientemente rápido como para poder usarlo inmediatamente.
-        cargarDatosDeMunicipio(props.datos[i].municipios[0], false);
+        return cargarDatosDeMunicipio(props.datos[i].municipios[0], false);
     }
 
-    //funcion que envia datos al index
+    // Función que envia datos al index
     const enviarDatosIndex = (res, estado, municipio)=>{
         props.obtenerDatos(res);
         props.obtenerEstado(estado);
@@ -98,7 +99,7 @@ export default function NavBarVer(props) {
 
     const [estadoDeApertura, setEstadoDeApertura] = useState("transition-transform -translate-x-full sm:translate-x-0")
 
-    function toggleMenu(event) {
+    function toggleMenu() {
         if (estadoDeApertura === "transition-transform -translate-x-full sm:translate-x-0") // Esta oculto y se muestra
             setEstadoDeApertura("transition-transform")
         else // Es visible y se oculta
@@ -110,8 +111,8 @@ export default function NavBarVer(props) {
             <span className="sr-only">Abrir menu</span>
             <i className="fa fa-align-justify fa-2x"></i>
         </button>
-        <div className={`fixed md:relative top-0 left-0 z-40 w-full md:w-72 bg-base-100 shadow-xl ${estadoDeApertura}`}>
-            <div className="h-full px-3 py-4 overflow-y-auto bg-base-100">
+        <div className={`fixed h-screen md:relative top-0 left-0 z-40 w-full md:w-72 bg-base-100 ${estadoDeApertura}`}>
+            <div className="h-full p-5 overflow-y-auto bg-base-100">
                 <div className="flex justify-evenly ps-2.5 mb-5">
                     <i className="fa fa-cloud fa-2x"></i>
                     <span className="self-center text-xl font-semibold whitespace-nowrap">Clima MX</span>

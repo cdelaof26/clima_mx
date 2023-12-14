@@ -1,14 +1,17 @@
 import { promises as fs } from 'fs';
 import NavBarVer from './componentes/navBarVer';
 import ComponenteDePresentacion from './componentes/presentacion';
-import Pronostico from './componentesEstado/Pronostico';
+import Noticias from './componentes/notas';
+import Pronostico from './componentes/pronostico';
 import { useState } from "react";
 
 
-export default function Home({ fechaDeRecopilacion: fechaDeRecopilacion, estados: datos, climaEscuela: dias }) {
+export default function Home({ fechaDeRecopilacion: fechaDeRecopilacion, estados: datos, jsonClimaGustavoAMadero: dias, noticias: notas }) {
     const[estado, setEstado]  = useState("Ciudad de México");
     const[municipio, setMunicipio] = useState("Gustavo A. Madero");
     const[diasDatos, setDiasDatos] = useState(dias);
+
+    const[etiquetaDeErrorVisible, setEtiquetaDeErrorVisible] = useState(false);
 
     const recibirDatos = (res) => {
         setDiasDatos(res);
@@ -22,13 +25,29 @@ export default function Home({ fechaDeRecopilacion: fechaDeRecopilacion, estados
         setMunicipio(municipioRecibido)
     }
 
+    const mostrarEtiquetaDeError = () => {
+        setEtiquetaDeErrorVisible(true)
+    }
+
     return (
         <main>
             <ComponenteDePresentacion></ComponenteDePresentacion>
+            <Noticias noticias={notas}></Noticias>
             <div id="clima" className="md:flex">
-                <NavBarVer datos={datos} obtenerDatos={recibirDatos} obtenerEstado={recibirEstado} obtenerMunicipio={recibirMunicipio}/>
+                <NavBarVer datos={datos} obtenerDatos={recibirDatos} obtenerEstado={recibirEstado} obtenerMunicipio={recibirMunicipio} mostrarEtiquetaDeError={mostrarEtiquetaDeError}/>
+                <div className={"toast toast-end " + (etiquetaDeErrorVisible ? "": "hidden")} onClick={() => (setEtiquetaDeErrorVisible(false))}>
+                    <div className="alert alert-error justify-between">
+                        <i className="fa fa-exclamation-triangle fa-2x"></i>
+                        <span>Ocurrió un error al cargar los datos del clima.<br></br>Intenta de nuevo</span>
+                    </div>
+                </div>
                 <Pronostico fecha={fechaDeRecopilacion} estado={estado} municipio={municipio} pronosticos={diasDatos}/>
             </div>
+            <footer className="footer footer-center p-4 bg-base-300 text-base-content">
+                <aside>
+                    <p>Copyright © 2023 - cdelaof26 y ZeroMaru001</p>
+                </aside>
+            </footer>
         </main>
     )
 }
@@ -44,14 +63,17 @@ export async function getStaticProps() {
             break;
         }
 
-    const datos =  await fs.readFile(process.cwd() + '/datos/estados.json', 'utf8')
-    const estados = JSON.parse(datos);
-    const datosEscuela =  await fs.readFile(process.cwd() + '/datos/estados/Ciudad de México/Gustavo A. Madero.json', "utf8");
-    const climaEscuela = JSON.parse(datosEscuela);
+    const estadosJson =  await fs.readFile(process.cwd() + '/datos/estados.json', 'utf8')
+    const estados = JSON.parse(estadosJson);
+    const datosDeClimaEnGustavoAMadero =  await fs.readFile(process.cwd() + '/datos/estados/Ciudad de México/Gustavo A. Madero.json', "utf8");
+    const jsonClimaGustavoAMadero = JSON.parse(datosDeClimaEnGustavoAMadero);
+
+    const datosDeNoticias =  await fs.readFile(process.cwd() + '/datos/notas.json', "utf8");
+    const noticias = JSON.parse(datosDeNoticias);
 
     return {
         props: {
-            fechaDeRecopilacion, estados, climaEscuela
+            fechaDeRecopilacion, estados, jsonClimaGustavoAMadero, noticias
         }
     }
 }

@@ -1,15 +1,28 @@
 # clima_mx
 
-Aplicación del clima para México hecha con NextJS, React, TailwindCSS y DaisyUI
+Aplicación para la visualización de datos del pronóstico del clima para México a través del API del SMN. 
+
+Esta aplicación esta hecha con NextJS, React, TailwindCSS, DaisyUI y Python.
+
+## Copyright
+Todos los derechos reservados cdelaof26 y ZeroMaru001
 
 ## Historial de cambios
+
+#### v0.0.8
+- Se renombró el componente `Pronostico` por `pronostico` y se movió al directorio `componentes`
+- Se agregó sección de notas de prensa del SMN (Servicio Meteorológico Nacional)
+- Se agregaron validaciones requeridas para el despliegue con `npm run build`
+- Se cambio el puerto de inicio del servidor de desarrollo y producción a 8080
+  - **Se requiere del redireccionamiento del puerto 80 a 8080 en producción**
+- Se agregó mensaje de error en caso de que no se puedan recuperar los datos del clima
+- Se agregó un _footer_
 
 #### v0.0.7
 - Se quitó el directorio de `.idea` del repositorio
 - Se mejoró el diseño responsivo para algunas resoluciones de pantalla
 - Se agregó sección de presentación de la _empresa_
 - Se cambio el icono de favoritos
-- 
 
 #### v0.0.6
 - Carga y muestra datos de un municipio según su estado

@@ -104,6 +104,9 @@ function TarjetaPronostico(props) {
  * @constructor
  */
 export default function Pronostico(props) {
+    if (props.pronosticos === undefined)
+        return <></>;
+
     const [bg1, setBG1] = useState("from-black");
     const [bg2, setBG2] = useState("to-black");
     const [bg3, setBG3] = useState("");

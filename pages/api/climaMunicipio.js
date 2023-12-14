@@ -16,8 +16,6 @@ export default async function handler(req, res) {
     const estado = req.body["estado"];
     const municipio = req.body["municipio"];
 
-    console.log("leer; estado: " + estado + ", municipio: " + municipio);
-
     if (estado.includes('"') || estado.includes('/') || estado.includes("'") || municipio.includes("\\")) {
         res.status(400).send({ message: "Illegal Request Body"});
         return;

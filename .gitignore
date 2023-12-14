@@ -2,8 +2,10 @@
 
 # datos
 datos/*.ddc
+datos/*.smn
 datos/Daily*
 datos/*.json
+datos/*.html
 datos/estados
 datos/fontawesome-free-5.15.4-web.zip
 datos/fontawesome-free-5.15.4-web

@@ -1,4 +1,9 @@
-
+/**
+ * Componente de presentación, no requiere parámetros
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function ComponenteDePresentacion() {
     return <div className="h-screen bg-base-100">
         <div className="relative lg:h-full flex flex-col-reverse lg:py-32 ">
@@ -13,7 +18,7 @@ export default function ComponenteDePresentacion() {
                     <p className="mb-5 text-4xl lg:text-8xl font-bold tracking-tight sm:leading-none">
                         ClimaMX
                     </p>
-                    <h2 className="mb-5 text-1xl lg:text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none">
+                    <h2 className="mb-5 text-2xl lg:text-4xl font-bold tracking-tight sm:leading-none">
                         El clima del todo el país en <p className="bg-gradient-to-r from-cyan-600 to-blue-500 inline-block text-transparent bg-clip-text">un solo lugar</p>
                     </h2>
                     <p className="pr-5 mb-5 text-base md:text-lg">

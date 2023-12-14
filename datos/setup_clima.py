@@ -1,9 +1,14 @@
 from pathlib import Path
-from datetime import datetime
-from urllib.request import urlretrieve
+from urllib import request
+import utilidades
 import gzip
 import json
 import re
+
+
+# Este script descarga y procesa los datos del clima del API del SMN,
+# estos datos son descompuestos en JSON más pequeños para su visualización
+# posterior de forma más eficiente y practica
 
 
 class Estado:
@@ -45,11 +50,6 @@ def filtrar_duplicados(elementos: list[str]) -> list:
     return _elementos
 
 
-def guardar_json(ruta: Path, datos_archivo: str):
-    with open(ruta, "w") as fichero:
-        fichero.write(datos_archivo)
-
-
 def eliminar_carpeta(ruta: Path):
     if not ruta.exists():
         return
@@ -71,12 +71,6 @@ def eliminar_carpeta(ruta: Path):
         _.rmdir()
 
 
-def eliminar_ddc(ruta: Path):
-    for elemento in ruta.iterdir():
-        if elemento.suffix == ".ddc":
-            elemento.unlink()
-
-
 def descargar_y_desempaquetar_clima() -> bool:
     url = "https://smn.conagua.gob.mx/tools/GUI/webservices/index.php?method=1"
     if json_daily_gz.exists():
@@ -85,7 +79,7 @@ def descargar_y_desempaquetar_clima() -> bool:
     if json_daily.exists():
         json_daily.unlink()
 
-    urlretrieve(url, json_daily_gz)
+    request.urlretrieve(url, json_daily_gz)
 
     if json_daily_gz.exists():
         with gzip.open(json_daily_gz, "rb") as fichero:
@@ -103,8 +97,7 @@ if __name__ == "__main__":
     if not cwd.exists():
         cwd.mkdir()
 
-    dia_de_consulta: str = datetime.now().strftime("%Y_%m_%d") + ".ddc"
-    carpeta_dia_de_consulta: str = datetime.now().strftime("%Y_%m_%d")
+    dia_de_consulta: str = utilidades.nombre_archivo_de_hoy(".ddc")
 
     archivo_ddc: Path = cwd.joinpath(dia_de_consulta)
     directorio_ddc: Path = cwd.joinpath("estados")
@@ -114,7 +107,7 @@ if __name__ == "__main__":
     if not archivo_ddc.exists():
         print("Descargando clima...", end=" ")
         eliminar_carpeta(directorio_ddc)
-        eliminar_ddc(cwd)
+        utilidades.eliminar_archivo_por_extension(cwd, ".ddc")
         descargar_y_desempaquetar_clima()
         print("Hecho!")
     elif json_estados.exists():
@@ -176,7 +169,7 @@ if __name__ == "__main__":
             estado_dir.mkdir()
 
     """
-        El archivo 'estados.json' tiene la forma (es un arreglo de JSONs)
+        El archivo 'estados.json' tiene la forma:
         [
             {
                 "nombre": "nombre_de_estado",
@@ -184,17 +177,18 @@ if __name__ == "__main__":
             }
             ...
         ]
+        
+        (es un arreglo de JSONs)
     """
-    estados_json_str = list()
+    estados_lista_de_json = list()
     for estado, directorio in zip(estados, estados_directorios):
         nuevo_estado_json = "{" + f'"nombre": "{estado.nombre}", "municipios": {estado.get_municipios()}' + "}"
         nuevo_estado_json = nuevo_estado_json.replace("'", '"')
-        estados_json_str.append(nuevo_estado_json)
+        estados_lista_de_json.append(nuevo_estado_json)
 
         for nombre_de_municipio, datos in estado:
             municipio_json = directorio.joinpath(nombre_de_municipio + ".json")
-            guardar_json(municipio_json, str(datos).replace("'", '"'))
+            utilidades.guardar_archivo(municipio_json, str(datos).replace("'", '"'))
 
-    guardar_json(json_estados, "[" + ", ".join(estados_json_str) + "]")
-
-    print("Hecho! ")
+    utilidades.guardar_archivo(json_estados, "[" + ", ".join(estados_lista_de_json) + "]")
+    print("Hecho!")
