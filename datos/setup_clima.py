@@ -15,7 +15,7 @@ class Estado:
     def __init__(self, nombre: str):
         self.nombre = nombre
         self._municipios = list()
-        self.datos_municipios: list[dict] = list()
+        self.datos_municipios = list()
 
     def __iter__(self):
         self.indice = 0
@@ -40,7 +40,7 @@ class Estado:
         return self._municipios
 
 
-def filtrar_duplicados(elementos: list[str]) -> list:
+def filtrar_duplicados(elementos) -> list:
     _elementos = list()
 
     for elemento in elementos:
@@ -137,10 +137,10 @@ if __name__ == "__main__":
     # Diferencia respecto a hora UTC
     datos_json_str = re.sub(r"\"dh\": \".*?\",", "", datos_json_str)
 
-    clima_json: list[dict] = json.loads(datos_json_str)  # Nos devuelve una lista de diccionarios
+    clima_json = json.loads(datos_json_str)  # Nos devuelve una lista de diccionarios
 
-    estados: list[Estado] = list()
-    estados_directorios: list[Path] = list()
+    estados = list()
+    estados_directorios = list()
 
     for clima in clima_json:
         # nombre_de_estado = clima.pop("nes")

@@ -45,7 +45,7 @@ export default function Home({ fechaDeRecopilacion: fechaDeRecopilacion, estados
             </div>
             <footer className="footer footer-center p-4 bg-base-300 text-base-content">
                 <aside>
-                    <p>Copyright © 2023 - cdelaof26 y ZeroMaru001</p>
+                    <p>Copyright © 2023 - <a href="https://github.com/cdelaof26">cdelaof26</a> y <a href="https://github.com/ZeroMaru001">ZeroMaru001</a></p>
                 </aside>
             </footer>
         </main>

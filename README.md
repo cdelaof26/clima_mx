@@ -9,6 +9,11 @@ Todos los derechos reservados cdelaof26 y ZeroMaru001
 
 ## Historial de cambios
 
+#### v0.0.9
+- Se quitó el `typing` de Python ya que las versiones anteriores a 3.9 no lo soportan
+- Se corrigió problema con el componente de presentación donde el texto no se visualizaba correctamente
+  al hacer más pequeño el navegador de forma vertical
+
 #### v0.0.8
 - Se renombró el componente `Pronostico` por `pronostico` y se movió al directorio `componentes`
 - Se agregó sección de notas de prensa del SMN (Servicio Meteorológico Nacional)
