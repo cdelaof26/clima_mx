@@ -9,6 +9,10 @@ Todos los derechos reservados cdelaof26 y ZeroMaru001
 
 ## Historial de cambios
 
+#### v0.1.0_2
+- Corrección de errores en el script `setup_clima.py` donde el procesameinto 
+  de datos no se realizaba correctamente
+
 #### v0.1.0_1
 - Ahora los estados y municipios estan ordenados
 

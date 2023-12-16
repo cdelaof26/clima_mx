@@ -12,10 +12,13 @@ import re
 
 
 class Estado:
-    def __init__(self, nombre: str):
+    def __init__(self, nombre: str, directorio: Path):
         self.nombre = nombre
         self._municipios = list()
         self.datos_municipios = list()
+        self.directorio = directorio
+        if not self.directorio.exists():
+            self.directorio.mkdir()
 
     def __iter__(self):
         self.indice = 0
@@ -66,21 +69,19 @@ def eliminar_carpeta(ruta: Path):
                 directorios.append(elemento)
                 continue
 
-            elemento.unlink()
+            elemento.unlink(True)
 
         directorios_explorados.insert(0, dir0)
 
     for _ in directorios_explorados:
-        _.rmdir()
+        if _.exists():
+            _.rmdir()
 
 
 def descargar_y_desempaquetar_clima() -> bool:
     url = "https://smn.conagua.gob.mx/tools/GUI/webservices/index.php?method=1"
-    if json_daily_gz.exists():
-        json_daily_gz.unlink()
-
-    if json_daily.exists():
-        json_daily.unlink()
+    json_daily_gz.unlink(True)
+    json_daily.unlink(True)
 
     request.urlretrieve(url, json_daily_gz)
 
@@ -109,7 +110,6 @@ if __name__ == "__main__":
 
     if not archivo_ddc.exists():
         print("Descargando clima...", end=" ")
-        eliminar_carpeta(directorio_ddc)
         utilidades.eliminar_archivo_por_extension(cwd, ".ddc")
         descargar_y_desempaquetar_clima()
         print("Hecho!")
@@ -125,6 +125,7 @@ if __name__ == "__main__":
         exit(1)
 
     archivo_ddc.touch()
+    eliminar_carpeta(directorio_ddc)
     if not directorio_ddc.exists():
         directorio_ddc.mkdir()
 
@@ -143,12 +144,11 @@ if __name__ == "__main__":
     clima_json = json.loads(datos_json_str)  # Nos devuelve una lista de diccionarios
 
     estados = list()
-    estados_directorios = list()
 
     for clima in clima_json:
         nombre_de_estado = clima.pop("nes")
         if not estados:
-            estados.append(Estado(nombre_de_estado))
+            estados.append(Estado(nombre_de_estado, directorio_ddc.joinpath(nombre_de_estado)))
 
         indice = -1
         for i, estado in enumerate(estados):
@@ -159,16 +159,9 @@ if __name__ == "__main__":
                 break
 
         if indice == -1:
-            estados.append(Estado(nombre_de_estado))
+            estados.append(Estado(nombre_de_estado, directorio_ddc.joinpath(nombre_de_estado)))
             estados[-1].agregar_municipio(clima.pop("nmun"))
             estados[-1].datos_municipios.append(clima)
-
-        estado_dir = directorio_ddc.joinpath(nombre_de_estado)
-        if estado_dir not in estados_directorios:
-            estados_directorios.append(estado_dir)
-
-        if not estado_dir.exists():
-            estado_dir.mkdir()
 
     """
         El archivo 'estados.json' tiene la forma:
@@ -185,14 +178,15 @@ if __name__ == "__main__":
     estados_lista_de_json = list()
 
     estados.sort(key=lambda e: e.nombre)
-    for estado, directorio in zip(estados, estados_directorios):
+
+    for estado in estados:
         estado.ordenar_municipios()
         nuevo_estado_json = "{" + f'"nombre": "{estado.nombre}", "municipios": {estado.get_municipios()}' + "}"
         nuevo_estado_json = nuevo_estado_json.replace("'", '"')
         estados_lista_de_json.append(nuevo_estado_json)
 
         for nombre_de_municipio, datos in estado:
-            municipio_json = directorio.joinpath(nombre_de_municipio + ".json")
+            municipio_json = estado.directorio.joinpath(nombre_de_municipio + ".json")
             utilidades.guardar_archivo(municipio_json, str(datos).replace("'", '"'))
 
     utilidades.guardar_archivo(json_estados, "[" + ", ".join(estados_lista_de_json) + "]")
