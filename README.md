@@ -9,6 +9,9 @@ Todos los derechos reservados cdelaof26 y ZeroMaru001
 
 ## Historial de cambios
 
+#### v0.1.0_1
+- Ahora los estados y municipios estan ordenados
+
 #### v0.1.0
 - Se agregó el script `deploy` en `package.json`
 

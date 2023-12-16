@@ -36,6 +36,9 @@ class Estado:
         if municipio not in self._municipios:
             self._municipios.append(municipio)
 
+    def ordenar_municipios(self):
+        self._municipios.sort()
+
     def get_municipios(self):
         return self._municipios
 
@@ -143,7 +146,6 @@ if __name__ == "__main__":
     estados_directorios = list()
 
     for clima in clima_json:
-        # nombre_de_estado = clima.pop("nes")
         nombre_de_estado = clima.pop("nes")
         if not estados:
             estados.append(Estado(nombre_de_estado))
@@ -181,7 +183,10 @@ if __name__ == "__main__":
         (es un arreglo de JSONs)
     """
     estados_lista_de_json = list()
+
+    estados.sort(key=lambda e: e.nombre)
     for estado, directorio in zip(estados, estados_directorios):
+        estado.ordenar_municipios()
         nuevo_estado_json = "{" + f'"nombre": "{estado.nombre}", "municipios": {estado.get_municipios()}' + "}"
         nuevo_estado_json = nuevo_estado_json.replace("'", '"')
         estados_lista_de_json.append(nuevo_estado_json)
