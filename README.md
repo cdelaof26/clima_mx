@@ -9,6 +9,9 @@ Todos los derechos reservados cdelaof26 y ZeroMaru001
 
 ## Historial de cambios
 
+#### v0.1.0
+- Se agregó el script `deploy` en `package.json`
+
 #### v0.0.9
 - Se quitó el `typing` de Python ya que las versiones anteriores a 3.9 no lo soportan
 - Se corrigió problema con el componente de presentación donde el texto no se visualizaba correctamente

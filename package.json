@@ -5,9 +5,12 @@
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
+    "start": "next start -p 8080",
+    "deploy": "next build; next start -p 8080",
     "predev": "sh ./datos/setup_data.sh",
     "prebuild": "sh ./datos/setup_data.sh",
-    "start": "next start -p 8080",
+    "prestart": "sh ./datos/setup_data.sh",
+    "predeploy": "sh ./datos/setup_data.sh",
     "lint": "next lint"
   },
   "dependencies": {
